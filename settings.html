@@ -4,29 +4,63 @@
   <meta charset="utf-8" />
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; padding: 12px; margin: 0; }
-    h3 { margin: 12px 0 6px; font-size: 16px; }
-    select, button { width: 100%; box-sizing: border-box; }
-    select { margin-bottom: 12px; padding: 6px; }
-    #sourceBoards, #lists { height: 120px; }
-    button { padding: 10px; border: 0; border-radius: 6px; cursor: pointer; }
-    #saveBtn { background: #0c66e4; color: white; }
-    #runSyncBtn { background: #f1f2f4; color: #172b4d; margin-top: 8px; }
-    #status { margin-top: 10px; font-size: 13px; color: #44546f; white-space: pre-wrap; }
+    body { font-family: Arial, sans-serif; padding: 14px; margin: 0; color: #172b4d; }
+    h3 { margin: 14px 0 6px; font-size: 15px; }
+    select, button, textarea, input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #d0d4db;
+      font-size: 14px;
+      background: #fff;
+    }
+    textarea { min-height: 90px; resize: vertical; }
+    #sourceBoards, #lists { min-height: 140px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btn-primary { background: #0c66e4; color: white; border: 0; cursor: pointer; }
+    .btn-secondary { background: #f1f2f4; color: #172b4d; border: 0; cursor: pointer; }
+    .section { margin-bottom: 14px; }
+    #status {
+      margin-top: 12px;
+      padding: 10px;
+      background: #f7f8f9;
+      border-radius: 8px;
+      font-size: 13px;
+      white-space: pre-wrap;
+      min-height: 18px;
+    }
+    .hint { font-size: 12px; color: #5e6c84; margin-top: 4px; }
   </style>
 </head>
 <body>
-  <h3>Mirror Board</h3>
-  <select id="mirrorBoard"></select>
+  <div class="section">
+    <h3>Mirror Board</h3>
+    <select id="mirrorBoard"></select>
+    <div class="hint">בחר את הבורד הראשי שאליו הכל ישוקף.</div>
+  </div>
 
-  <h3>Source Boards</h3>
-  <select id="sourceBoards" multiple></select>
+  <div class="section">
+    <h3>Source Boards</h3>
+    <select id="sourceBoards" multiple></select>
+    <div class="hint">בחר בורד אחד או יותר לשיקוף.</div>
+  </div>
 
-  <h3>Lists to Sync</h3>
-  <select id="lists" multiple></select>
+  <div class="section">
+    <h3>Lists to Sync</h3>
+    <select id="lists" multiple></select>
+    <div class="hint">בחר את שמות הרשימות שיסונכרנו.</div>
+  </div>
 
-  <button id="saveBtn">Save Configuration</button>
-  <button id="runSyncBtn">Run Full Sync</button>
+  <div class="section row">
+    <button id="saveBtn" class="btn-primary">Save Configuration</button>
+    <button id="runSyncBtn" class="btn-secondary">Run Full Sync</button>
+  </div>
+
+  <div class="section">
+    <h3>Saved Configurations</h3>
+    <textarea id="configPreview" readonly></textarea>
+  </div>
 
   <div id="status"></div>
 

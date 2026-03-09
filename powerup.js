@@ -6,9 +6,16 @@ window.TrelloPowerUp.initialize({
         return t.popup({
           title: 'Mirror Configuration',
           url: './settings.html',
-          height: 560
+          height: 680
         });
       }
     }];
+  },
+  'show-settings': function(t) {
+    return t.popup({
+      title: 'Mirror Configuration',
+      url: './settings.html',
+      height: 680
+    });
   }
 });

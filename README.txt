@@ -1,7 +1,12 @@
-Use this Power-Up connector URL in Trello admin:
-https://goldbergaviv-png.github.io/trello-mirror-powerup/powerup.html
+Upload all files from this ZIP to the repository root.
 
-Important:
-- Upload ONLY these files to the repository root.
-- In Trello Power-Up admin, point the Iframe Connector URL to powerup.html
-- Disable the old Power-Up from the board and add it again after upload.
+Required backend endpoints for this full version:
+- GET  /boards
+- GET  /boards/:id/lists
+- GET  /config
+- POST /config
+- POST /sync/bootstrap
+- POST /webhooks/register
+
+Connector URL in Trello Power-Up admin:
+https://goldbergaviv-png.github.io/trello-mirror-powerup/powerup.html
