@@ -122,19 +122,22 @@ function validateForm(mirrorBoardId, sourceBoards, lists) {
 async function saveConfig() {
   try {
     setStatus("Saving configuration...");
-    const mirrorEl = document.getElementById("mirrorBoard");
-    const mirrorBoardId = mirrorEl.value;
-    const mirrorBoardName = mirrorEl.options[mirrorEl.selectedIndex]?.text || "";
-    const allBoardOptions = Array.from(mirrorEl.options);
+
+    const mirrorBoardEl = document.getElementById("mirrorBoard");
+    const mirrorBoardId = mirrorBoardEl.value;
+    const mirrorBoardName = mirrorBoardEl.options[mirrorBoardEl.selectedIndex]?.text || "";
+
+    const allBoardOptions = Array.from(mirrorBoardEl.options);
     const sourceBoards = selectedBoardIds();
     const lists = selectedListNames();
 
     validateForm(mirrorBoardId, sourceBoards, lists);
 
     for (const sourceBoardId of sourceBoards) {
-      const sourceBoardName = allBoardOptions.find(o => o.value === sourceBoardId)?.text || sourceBoardId;
+      const sourceBoardName =
+        allBoardOptions.find(o => o.value === sourceBoardId)?.text || sourceBoardId;
 
-      await api("/config", {
+      const configRes = await api("/config", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -146,24 +149,32 @@ async function saveConfig() {
         })
       });
 
+      try {
+        await api("/webhooks/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            boardId: sourceBoardId,
+            description: `Source board webhook - ${sourceBoardName}`
+          })
+        });
+      } catch (err) {
+        console.warn("source webhook register warning:", err);
+      }
+    }
+
+    try {
       await api("/webhooks/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          boardId: sourceBoardId,
-          description: `Source board webhook - ${sourceBoardName}`
+          boardId: mirrorBoardId,
+          description: `Mirror board webhook - ${mirrorBoardName}`
         })
       });
+    } catch (err) {
+      console.warn("mirror webhook register warning:", err);
     }
-
-    await api("/webhooks/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        boardId: mirrorBoardId,
-        description: `Mirror board webhook - ${mirrorBoardName}`
-      })
-    });
 
     await t.set("board", "shared", "amgMirrorConfig", {
       mirrorBoardId,
@@ -172,14 +183,18 @@ async function saveConfig() {
       lists
     });
 
-    setStatus("Configuration saved and webhooks registered.", "ok");
-    await loadSavedConfigs();
+    setStatus("Configuration saved.", "ok");
+
+    try {
+      await loadSavedConfigs();
+    } catch (err) {
+      console.warn("loadSavedConfigs warning:", err);
+    }
   } catch (err) {
     console.error(err);
     setStatus("שגיאה בשמירה: " + err.message, "error");
   }
 }
-
 async function runFullSync() {
   try {
     setStatus("Running full sync...");
