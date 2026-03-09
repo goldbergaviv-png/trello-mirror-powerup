@@ -1,23 +1,24 @@
 <html>
 <head>
 <script src="https://p.trellocdn.com/power-up.min.js"></script>
-<script src="settings.js"></script>
 </head>
 
-<body>
+<body style="font-family:Arial;padding:12px">
 
 <h3>Mirror Board</h3>
-<select id="mirrorBoard"></select>
+<select id="mirrorBoard" style="width:100%;margin-bottom:12px"></select>
 
 <h3>Source Boards</h3>
-<select id="sourceBoards" multiple></select>
+<select id="sourceBoards" multiple style="width:100%;height:120px;margin-bottom:12px"></select>
 
 <h3>Lists to Sync</h3>
-<select id="lists" multiple></select>
+<select id="lists" multiple style="width:100%;height:120px;margin-bottom:12px"></select>
 
 <br><br>
 
-<button onclick="saveConfig()">Save Configuration</button>
+<button id="saveBtn">Save Configuration</button>
+
+<script src="settings.js"></script>
 
 </body>
 </html>

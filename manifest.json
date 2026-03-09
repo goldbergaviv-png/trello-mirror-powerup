@@ -1,6 +1,6 @@
 {
-  "name": "Mirror Control",
-  "details": "Control Trello board mirroring",
+  "name": "AMG Mirror",
+  "details": "Mirror configuration panel",
   "icon": {
     "url": "https://cdn-icons-png.flaticon.com/512/1828/1828919.png"
   },
