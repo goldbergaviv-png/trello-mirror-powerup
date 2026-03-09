@@ -1,68 +1,136 @@
 <!doctype html>
-<html>
+<html lang="he" dir="rtl">
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; padding: 14px; margin: 0; color: #172b4d; }
-    h3 { margin: 14px 0 6px; font-size: 15px; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 14px;
+      margin: 0;
+      color: #172b4d;
+      background: #f7f8f9;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+      margin-bottom: 14px;
+    }
+    h2 { margin: 0 0 12px; font-size: 24px; }
+    h3 { margin: 0 0 8px; font-size: 16px; }
+    .sub { color: #5e6c84; font-size: 12px; margin-bottom: 8px; }
     select, button, textarea, input {
       width: 100%;
       box-sizing: border-box;
       padding: 8px;
-      border-radius: 8px;
+      border-radius: 10px;
       border: 1px solid #d0d4db;
       font-size: 14px;
       background: #fff;
     }
-    textarea { min-height: 90px; resize: vertical; }
-    #sourceBoards, #lists { min-height: 140px; }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+      font-family: monospace;
+      direction: ltr;
+      text-align: left;
+    }
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
     .btn-primary { background: #0c66e4; color: white; border: 0; cursor: pointer; }
     .btn-secondary { background: #f1f2f4; color: #172b4d; border: 0; cursor: pointer; }
     .section { margin-bottom: 14px; }
     #status {
       margin-top: 12px;
       padding: 10px;
-      background: #f7f8f9;
+      background: #f1f2f4;
       border-radius: 8px;
       font-size: 13px;
       white-space: pre-wrap;
       min-height: 18px;
     }
     .hint { font-size: 12px; color: #5e6c84; margin-top: 4px; }
+    .box {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      max-height: 220px;
+      overflow: auto;
+      border: 1px solid #d0d4db;
+      border-radius: 10px;
+      padding: 10px;
+      background: #fff;
+    }
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 4px;
+      border-radius: 8px;
+    }
+    .check-row:hover { background: #f7f8f9; }
+    .check-row input { width: auto; margin: 0; }
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .small-btn { padding: 8px; font-size: 12px; cursor: pointer; }
+    .ok { background: #dcfff1 !important; color: #216e4e; }
+    .error { background: #ffebe6 !important; color: #ae2e24; }
   </style>
 </head>
 <body>
-  <div class="section">
-    <h3>Mirror Board</h3>
-    <select id="mirrorBoard"></select>
-    <div class="hint">בחר את הבורד הראשי שאליו הכל ישוקף.</div>
+  <div class="card">
+    <h2>Mirror Configuration</h2>
+    <div class="sub">בחר בורד מראה, בורדי מקור ורשימות לסנכרון.</div>
+
+    <div class="section">
+      <h3>Mirror Board</h3>
+      <select id="mirrorBoard"></select>
+      <div class="hint">בחר את הבורד הראשי שאליו הכל ישוקף.</div>
+    </div>
+
+    <div class="section">
+      <h3>Source Boards</h3>
+      <div class="sub">אפשר לבחור כמה בורדים.</div>
+      <div class="toolbar">
+        <button id="selectAllBoardsBtn" type="button" class="small-btn btn-secondary">בחר הכל</button>
+        <button id="clearBoardsBtn" type="button" class="small-btn btn-secondary">נקה בחירה</button>
+      </div>
+      <div id="sourceBoardsBox" class="box"></div>
+    </div>
+
+    <div class="section">
+      <h3>Lists to Sync</h3>
+      <div class="sub">הרשימות נטענות אוטומטית מהבורד שנבחר כמראה.</div>
+      <div class="toolbar">
+        <button id="selectAllListsBtn" type="button" class="small-btn btn-secondary">בחר הכל</button>
+        <button id="clearListsBtn" type="button" class="small-btn btn-secondary">נקה בחירה</button>
+      </div>
+      <div id="listsBox" class="box"></div>
+    </div>
+
+    <div class="btn-row">
+      <button id="saveBtn" type="button" class="btn-primary">Save Configuration</button>
+      <button id="runSyncBtn" type="button" class="btn-secondary">Run Full Sync</button>
+    </div>
+
+    <div id="status"></div>
   </div>
 
-  <div class="section">
-    <h3>Source Boards</h3>
-    <select id="sourceBoards" multiple></select>
-    <div class="hint">בחר בורד אחד או יותר לשיקוף.</div>
-  </div>
-
-  <div class="section">
-    <h3>Lists to Sync</h3>
-    <select id="lists" multiple></select>
-    <div class="hint">בחר את שמות הרשימות שיסונכרנו.</div>
-  </div>
-
-  <div class="section row">
-    <button id="saveBtn" class="btn-primary">Save Configuration</button>
-    <button id="runSyncBtn" class="btn-secondary">Run Full Sync</button>
-  </div>
-
-  <div class="section">
+  <div class="card">
     <h3>Saved Configurations</h3>
     <textarea id="configPreview" readonly></textarea>
   </div>
-
-  <div id="status"></div>
 
   <script src="settings.js"></script>
 </body>

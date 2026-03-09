@@ -1,6 +1,6 @@
 Upload all files from this ZIP to the repository root.
 
-Required backend endpoints for this full version:
+This version requires these backend endpoints:
 - GET  /boards
 - GET  /boards/:id/lists
 - GET  /config

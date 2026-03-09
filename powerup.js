@@ -1,12 +1,12 @@
 window.TrelloPowerUp.initialize({
-  'board-buttons': function(t, opts) {
+  'board-buttons': function(t) {
     return [{
       text: 'Mirror Settings',
       callback: function(t) {
         return t.popup({
           title: 'Mirror Configuration',
           url: './settings.html',
-          height: 680
+          height: 760
         });
       }
     }];
@@ -15,7 +15,7 @@ window.TrelloPowerUp.initialize({
     return t.popup({
       title: 'Mirror Configuration',
       url: './settings.html',
-      height: 680
+      height: 760
     });
   }
 });
