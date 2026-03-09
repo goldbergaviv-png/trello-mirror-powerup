@@ -1,24 +1,34 @@
 <html>
 <head>
-<script src="https://p.trellocdn.com/power-up.min.js"></script>
+  <meta charset="utf-8" />
+  <script src="https://p.trellocdn.com/power-up.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 12px; margin: 0; }
+    h3 { margin: 12px 0 6px; font-size: 16px; }
+    select, button { width: 100%; box-sizing: border-box; }
+    select { margin-bottom: 12px; padding: 6px; }
+    #sourceBoards, #lists { height: 120px; }
+    button { padding: 10px; border: 0; border-radius: 6px; cursor: pointer; }
+    #saveBtn { background: #0c66e4; color: white; }
+    #runSyncBtn { background: #f1f2f4; color: #172b4d; margin-top: 8px; }
+    #status { margin-top: 10px; font-size: 13px; color: #44546f; white-space: pre-wrap; }
+  </style>
 </head>
+<body>
+  <h3>Mirror Board</h3>
+  <select id="mirrorBoard"></select>
 
-<body style="font-family:Arial;padding:12px">
+  <h3>Source Boards</h3>
+  <select id="sourceBoards" multiple></select>
 
-<h3>Mirror Board</h3>
-<select id="mirrorBoard" style="width:100%;margin-bottom:12px"></select>
+  <h3>Lists to Sync</h3>
+  <select id="lists" multiple></select>
 
-<h3>Source Boards</h3>
-<select id="sourceBoards" multiple style="width:100%;height:120px;margin-bottom:12px"></select>
+  <button id="saveBtn">Save Configuration</button>
+  <button id="runSyncBtn">Run Full Sync</button>
 
-<h3>Lists to Sync</h3>
-<select id="lists" multiple style="width:100%;height:120px;margin-bottom:12px"></select>
+  <div id="status"></div>
 
-<br><br>
-
-<button id="saveBtn">Save Configuration</button>
-
-<script src="settings.js"></script>
-
+  <script src="settings.js"></script>
 </body>
 </html>

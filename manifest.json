@@ -5,7 +5,8 @@
     "url": "https://cdn-icons-png.flaticon.com/512/1828/1828919.png"
   },
   "capabilities": [
-    "board-buttons"
+    "board-buttons",
+    "show-settings"
   ],
   "connectors": {
     "iframe": {
