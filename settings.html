@@ -32,7 +32,7 @@
       background: #fff;
     }
     textarea {
-      min-height: 130px;
+      min-height: 150px;
       resize: vertical;
       font-family: monospace;
       direction: ltr;
@@ -54,7 +54,7 @@
       border-radius: 8px;
       font-size: 13px;
       white-space: pre-wrap;
-      min-height: 18px;
+      min-height: 20px;
     }
     .hint { font-size: 12px; color: #5e6c84; margin-top: 4px; }
     .box {
@@ -86,12 +86,14 @@
     .small-btn { padding: 8px; font-size: 12px; cursor: pointer; }
     .ok { background: #dcfff1 !important; color: #216e4e; }
     .error { background: #ffebe6 !important; color: #ae2e24; }
+    .warn { background: #fff7d6 !important; color: #7f5f01; }
+    .muted { color: #5e6c84; font-size: 12px; }
   </style>
 </head>
 <body>
   <div class="card">
-    <h2>Mirror Configuration</h2>
-    <div class="sub">בחר בורד מראה, בורדי מקור ורשימות לסנכרון.</div>
+    <h2>Mirror Configuration v8</h2>
+    <div class="sub">גרסה מלאה: cache busting, checkboxים, ולידציה, warnings, וסינון כפילויות בתצוגה.</div>
 
     <div class="section">
       <h3>Mirror Board</h3>
@@ -129,9 +131,16 @@
 
   <div class="card">
     <h3>Saved Configurations</h3>
+    <div class="sub">מוצגת רק הרשומה החדשה ביותר לכל זוג של Mirror Board + Source Board.</div>
     <textarea id="configPreview" readonly></textarea>
   </div>
 
-  <script src="settings.js"></script>
+  <div class="card">
+    <h3>Debug</h3>
+    <div class="muted">עוזר להבין מה נטען ומה נשמר.</div>
+    <textarea id="debugBox" readonly></textarea>
+  </div>
+
+  <script src="settings.js?v=8"></script>
 </body>
 </html>

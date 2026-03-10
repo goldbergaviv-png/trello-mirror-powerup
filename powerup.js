@@ -5,8 +5,8 @@ window.TrelloPowerUp.initialize({
       callback: function(t) {
         return t.popup({
           title: 'Mirror Configuration',
-          url: './settings.html',
-          height: 760
+          url: './settings.html?v=8',
+          height: 820
         });
       }
     }];
@@ -14,8 +14,8 @@ window.TrelloPowerUp.initialize({
   'show-settings': function(t) {
     return t.popup({
       title: 'Mirror Configuration',
-      url: './settings.html',
-      height: 760
+      url: './settings.html?v=8',
+      height: 820
     });
   }
 });

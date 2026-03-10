@@ -1,6 +1,14 @@
 Upload all files from this ZIP to the repository root.
 
-This version requires these backend endpoints:
+Version 8 includes:
+- cache busting with ?v=8
+- stable checkbox UI
+- deduped Saved Configurations preview
+- better validation before save
+- warnings if webhook registration fails but config save succeeds
+- improved debug box
+
+Backend required:
 - GET  /boards
 - GET  /boards/:id/lists
 - GET  /config
@@ -8,5 +16,7 @@ This version requires these backend endpoints:
 - POST /sync/bootstrap
 - POST /webhooks/register
 
-Connector URL in Trello Power-Up admin:
-https://goldbergaviv-png.github.io/trello-mirror-powerup/powerup.html
+Recommended Worker changes after upload:
+1) In POST /config: delete old config for same (mirror_board_id, source_board_id) before insert
+2) In getConfigBySourceBoardId / getConfigByMirrorBoardId: add ORDER BY id DESC
+3) Clean old duplicate rows once
